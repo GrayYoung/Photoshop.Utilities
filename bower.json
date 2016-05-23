@@ -1,0 +1,26 @@
+{
+  "name": "Photoshop-Utilities",
+  "version": "0.0.1",
+  "ignore": [
+    ".jshintrc",
+    "*.txt",
+    "*.html",
+    "*.json",
+    "*.md",
+	".bower.json",
+	"README",
+    "build",
+    "speed",
+    "test",
+    "demos",
+    "demo",
+    "json-test",
+    "example.*",
+    "Gruntfile.js",
+    "gulpfile.js"
+  ],
+  "dependencies": {
+  },
+  "devDependencies": {},
+  "private": true
+}
