@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Shape
  * Version: 0.0.3
  * Author: Gray Young
@@ -26,7 +26,7 @@ var Shape = {
 		create: function() {
 			var doc = app.activeDocument;
 			var subPath = new SubPathInfo(), shapePath = null;
-			var spots = arguments[0]; points = [];
+			var spots = arguments[0][0]; points = [];
 
 			for (var i = 0; i < spots.length; i++) {
 				points[i] = new PathPointInfo();
@@ -59,7 +59,7 @@ var Shape = {
 			ref60.putClass(stringIDToTypeID('contentLayer'));
 			desc88.putReference(charIDToTypeID('null'), ref60);
 
-			Shape._setRGB(desc91, arguments[1] instanceof Color ? arguments[1] : Shape.COLOR.BLACK);
+			Shape._setRGB(desc91, arguments[0][1] instanceof Color ? arguments[0][1] : Shape.COLOR.BLACK);
 			desc90.putObject(charIDToTypeID('Clr '), id481, desc91);
 			desc89.putObject(charIDToTypeID('Type'), stringIDToTypeID('solidColorLayer'), desc90);
 			desc88.putObject(charIDToTypeID('Usng'), stringIDToTypeID('contentLayer'), desc89);
