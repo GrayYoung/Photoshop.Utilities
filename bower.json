@@ -1,6 +1,6 @@
 {
   "name": "Photoshop-Utilities",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "ignore": [
     ".jshintrc",
     "*.txt",

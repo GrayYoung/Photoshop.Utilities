@@ -1,14 +1,29 @@
-/**
+﻿/**
  * Shape
- * Version: 0.0.2
+ * Version: 0.0.3
  * Author: Gray Young
  * 
  * Copyright 2016 Released under the MIT license.
  */
 
+#include 'Color.jsx'
+
 var Shape = {
-	vector : {
-		create : function() {
+	COLOR: {
+		WHITE: new Color(255, 255, 255),
+		BLACK: new Color(0, 0, 0),
+		RED: new Color(255, 0, 0),
+		GREEN: new Color(0, 255, 0),
+		BLUE: new Color(0, 0, 255),
+		YELLOW: new Color(255, 255, 0)
+	},
+	_setRGB: function(actionDescriptor, color) {
+		actionDescriptor.putDouble(charIDToTypeID('Rd  '), color.rgb.red);
+		actionDescriptor.putDouble(charIDToTypeID('Grn '), color.rgb.green);
+		actionDescriptor.putDouble(charIDToTypeID('Bl  '), color.rgb.blue);
+	},
+	vector: {
+		create: function() {
 			var doc = app.activeDocument;
 			var subPath = new SubPathInfo(), shapePath = null;
 			var spots = arguments[0]; points = [];
@@ -22,8 +37,11 @@ var Shape = {
 					points[i].rightDirection = [ spots[i][0] + 50, spots[i][0] + 50 ];
 				}
 			}
-			if(typeof arguments[1] === 'function') {
+			if(typeof arguments[1] == 'function') {
 				arguments[1](points);
+			}
+			if(typeof arguments[2] == 'function') {
+				arguments[2](points);
 			}
 
 			subPath.closed = true;
@@ -41,9 +59,7 @@ var Shape = {
 			ref60.putClass(stringIDToTypeID('contentLayer'));
 			desc88.putReference(charIDToTypeID('null'), ref60);
 
-			desc91.putDouble(charIDToTypeID('Rd  '), 0.000000); // R
-			desc91.putDouble(charIDToTypeID('Grn '), 0.000000); // G
-			desc91.putDouble(charIDToTypeID('Bl  '), 0.000000); // B
+			Shape._setRGB(desc91, arguments[1] instanceof Color ? arguments[1] : Shape.COLOR.BLACK);
 			desc90.putObject(charIDToTypeID('Clr '), id481, desc91);
 			desc89.putObject(charIDToTypeID('Type'), stringIDToTypeID('solidColorLayer'), desc90);
 			desc88.putObject(charIDToTypeID('Usng'), stringIDToTypeID('contentLayer'), desc89);
@@ -68,10 +84,9 @@ var Shape = {
 		 * cPosition(Array) : The coordinate of center of the ellipse.
 		 * dDistance(Array) : Determine the shape
 		 */
-		createEllipse : function(r, cPosition, radians) {
+		createEllipse: function(r, cPosition, radians) {
 			var subPath = new SubPathInfo(), points = new Array(new PathPointInfo, new PathPointInfo, new PathPointInfo, new PathPointInfo);
-			var roundPathLayer;
-			var dDistance;
+			var roundPathLayer,  dDistance;
 
 			if(!(cPosition instanceof Array)) {
 				cPosition = [r, r];
@@ -127,9 +142,7 @@ var Shape = {
 			ref60.putClass(stringIDToTypeID('contentLayer'));
 			desc88.putReference(charIDToTypeID('null'), ref60);
 
-			desc91.putDouble(charIDToTypeID('Rd  '), 0.000000);
-			desc91.putDouble(charIDToTypeID('Grn '), 0.000000);
-			desc91.putDouble(charIDToTypeID('Bl  '), 0.000000);
+			Shape._setRGB(desc91, arguments[3] instanceof Color ? arguments[3] : Shape.COLOR.BLACK);
 			desc90.putObject(charIDToTypeID('Clr '), charIDToTypeID('RGBC'), desc91);
 			desc89.putObject(charIDToTypeID('Type'), stringIDToTypeID('solidColorLayer'), desc90);
 			desc88.putObject(charIDToTypeID('Usng'), stringIDToTypeID('contentLayer'), desc89);
@@ -138,7 +151,7 @@ var Shape = {
 			roundPathLayer.remove();
 		}
 	},
-	selection : {
+	selection: {
 		drawLine : function(doc, start, stop) {
 			var startPoint = new PathPointInfo();
 			var stopPoint = new PathPointInfo();
@@ -162,7 +175,7 @@ var Shape = {
 			line.strokePath(ToolType.PENCIL);
 			line.remove();
 		},
-		drawCycle : function() {
+		drawCycle: function() {
 			var desc3 = new ActionDescriptor();
 			var desc4 = new ActionDescriptor();
 			var ref1 = new ActionReference();
